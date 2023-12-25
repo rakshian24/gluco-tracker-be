@@ -24,9 +24,15 @@ const port = SERVER_PORT || 5000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(cors({
-  origin: ['http://localhost:3000', 'https://rakshian-gluco-tracker.vercel.app']
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://rakshian-gluco-tracker.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
