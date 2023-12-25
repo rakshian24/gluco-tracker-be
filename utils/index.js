@@ -1,11 +1,11 @@
 import moment from "moment";
 
 const getFormattedTimeStamp = (value) => {
-  return moment(value).format("DD/MMM/YYYY hh:mm:ss A")
-}
+  return moment(value).format("DD/MMM/YYYY hh:mm:ss A");
+};
 
 const isArrayEmpty = (arr) => {
-  return arr && arr.length > 0 ? false : true
+  return arr && arr.length > 0 ? false : true;
 };
 
 class AppError extends Error {
@@ -18,8 +18,4 @@ class AppError extends Error {
   }
 }
 
-export {
-  getFormattedTimeStamp,
-  AppError,
-  isArrayEmpty
-}
+export { getFormattedTimeStamp, AppError, isArrayEmpty };

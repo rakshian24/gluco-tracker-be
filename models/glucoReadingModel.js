@@ -91,7 +91,7 @@ const glucoReadingSchema = mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const GlucoReading = mongoose.model("GlucoReading", glucoReadingSchema);
