@@ -1,0 +1,27 @@
+{
+  "name": "gluco-tracker-be",
+  "version": "1.0.0",
+  "description": "A backend app for glucose tracker",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "server:dev": "nodemon server.js",
+    "server:prod": "NODE_ENV=production nodemon server.js",
+    "start": "node server.js"
+  },
+  "author": "Rakshith Sindhiya R",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.1",
+    "moment": "^2.29.4",
+    "mongoose": "^7.4.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.0.1",
+    "validator": "^13.11.0"
+  }
+}
