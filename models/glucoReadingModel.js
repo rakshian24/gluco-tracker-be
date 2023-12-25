@@ -1,62 +1,84 @@
-import mongoose from 'mongoose';
-import { AppError } from '../utils/index.js';
+import mongoose from "mongoose";
+import { AppError } from "../utils/index.js";
 
-const typeForMakingConsumedFoodsRequired = ['AB', 'AL', 'AD'];
-const typeForMakingIsMedsTakenRequired = ['AB', 'AD'];
+const typeForMakingConsumedFoodsRequired = ["AB", "AL", "AD"];
+const typeForMakingIsMedsTakenRequired = ["AB", "AD"];
+const typeForMakingFoodConsumedAtRequired = ["AB", "AL", "AD"];
 
 const glucoReadingSchema = mongoose.Schema(
   {
     type: {
       type: String,
-      required: [true, 'Please select the type!'],
-      enum: ['BB', 'AB', 'BL', 'AL', 'BD', 'AD'],
+      required: [true, "Please select the type!"],
+      enum: ["BB", "AB", "BL", "AL", "BD", "AD"],
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
+    },
+    //This field is to know at what the user had their breakfast/lunch/dinner
+    foodConsumedAt: {
+      type: Date,
+      validate: {
+        validator: function (foodConsumedAt) {
+          if (typeForMakingFoodConsumedAtRequired.includes(this.type)) {
+            if (foodConsumedAt) {
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            return true;
+          }
+        },
+        message: "Please provide the food consumed time!",
+      },
     },
     reading: {
       type: Number,
-      required: [true, 'Reading is required!'],
-      min: [51, 'Reading must be greater than 50'],
-      max: [400, 'Exceeding the reading limit(400)'],
+      required: [true, "Reading is required!"],
+      min: [51, "Reading must be greater than 50"],
+      max: [400, "Exceeding the reading limit(400)"],
       validate: {
         validator: function (readingValue) {
           // Below regex is for allowing only positive non decimal numbers with null value
-          if (!(/^(?!0+(?:\0+)?)\d*(?:\d+)?$/.test(readingValue))) {
-            throw new AppError('Special characters are not allowed', 400)
+          if (!/^(?!0+(?:\0+)?)\d*(?:\d+)?$/.test(readingValue)) {
+            throw new AppError("Special characters are not allowed", 400);
           }
-        }
-      }
+        },
+      },
     },
     isMedsTaken: {
       type: Boolean,
       validate: {
         validator: function (isMedsTaken) {
-          if (typeForMakingIsMedsTakenRequired.includes(this.type) && isMedsTaken === null) {
-            throw new AppError('Have you taken your pills yet?', 400)
+          if (
+            typeForMakingIsMedsTakenRequired.includes(this.type) &&
+            isMedsTaken === null
+          ) {
+            throw new AppError("Have you taken your pills yet?", 400);
           }
-        }
-      }
+        },
+      },
     },
     consumedFoods: {
       type: [mongoose.Schema.Types.ObjectId],
-      ref: 'Food',
+      ref: "Food",
       validate: {
         validator: function (consumedFoodsVal) {
           if (typeForMakingConsumedFoodsRequired.includes(this.type)) {
             if (consumedFoodsVal && consumedFoodsVal.length > 0) {
-              return true
+              return true;
             } else {
-              return false
+              return false;
             }
           } else {
-            return true
+            return true;
           }
         },
-        message: 'Please provide the food consumed!'
-      }
+        message: "Please provide the food consumed!",
+      },
     },
     description: {
       type: String,
@@ -64,7 +86,7 @@ const glucoReadingSchema = mongoose.Schema(
     },
     isExercised: {
       type: Boolean,
-      default: false
+      default: false,
     },
   },
   {
@@ -72,6 +94,6 @@ const glucoReadingSchema = mongoose.Schema(
   }
 );
 
-const GlucoReading = mongoose.model('GlucoReading', glucoReadingSchema);
+const GlucoReading = mongoose.model("GlucoReading", glucoReadingSchema);
 
 export default GlucoReading;
