@@ -18,11 +18,11 @@ const createFood = asyncHandler(async (req, res) => {
       data: {
         _id: newFood._id,
         value: newFood.value,
-        label: newFood.label
-      }
-    })
+        label: newFood.label,
+      },
+    });
   } else {
-    throw new AppError('User not found', 404);
+    throw new AppError("User not found", 404);
   }
 });
 
@@ -36,11 +36,8 @@ const getAllFoods = asyncHandler(async (req, res) => {
     const foods = await Food.find();
     res.status(200).json(foods);
   } else {
-    throw new AppError('User not found', 404);
+    throw new AppError("User not found", 404);
   }
 });
 
-export {
-  createFood,
-  getAllFoods
-}
+export { createFood, getAllFoods };

@@ -127,7 +127,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   const updatedUser = await User.findOneAndUpdate(
     { _id: req.user._id },
     { $set: updatePayload },
-    { new: true }
+    { new: true },
   );
 
   res.status(200).json({

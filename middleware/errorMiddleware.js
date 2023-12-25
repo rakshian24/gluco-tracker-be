@@ -21,9 +21,8 @@ const handleDuplicateFieldsError = (error) => {
   let allErrors = {};
 
   Object.keys(error.keyValue).forEach((item) => {
-    return (allErrors[
-      item
-    ] = `This value already exists. Please use another value`);
+    return (allErrors[item] =
+      `This value already exists. Please use another value`);
   });
 
   return new AppError(JSON.stringify(allErrors), 400);
@@ -50,7 +49,9 @@ const errorHandler = (err, req, res, next) => {
     res.status(error.statusCode).json({
       status: error.status,
       message: error.message,
-      ...process.env.NODE_ENV === "development" && { errorStack: error.stack }
+      ...(process.env.NODE_ENV === "development" && {
+        errorStack: error.stack,
+      }),
     });
   } else {
     res.status(500).json({
@@ -58,8 +59,6 @@ const errorHandler = (err, req, res, next) => {
       message: "Something went wrong!",
     });
   }
-
-
 };
 
 export { notFound, errorHandler };
