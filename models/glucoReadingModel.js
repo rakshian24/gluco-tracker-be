@@ -12,6 +12,20 @@ const glucoReadingSchema = mongoose.Schema(
       required: [true, "Please select the type!"],
       enum: ["BB", "AB", "BL", "AL", "BD", "AD"],
     },
+    interval: {
+      type: Number,
+      enum: {
+        values: [1, 2],
+        message: "Reading interval can either be 1 or 2.",
+      },
+      required: function () {
+        if (typeForMakingConsumedFoodsRequired.includes(this.type)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -91,7 +105,7 @@ const glucoReadingSchema = mongoose.Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 const GlucoReading = mongoose.model("GlucoReading", glucoReadingSchema);
