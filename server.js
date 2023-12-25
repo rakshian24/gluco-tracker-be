@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
+import cors from "cors";
 
 import connectDB from "./database/db.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
@@ -23,6 +24,9 @@ const port = SERVER_PORT || 5000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://rakshian-gluco-tracker.vercel.app']
+}));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
